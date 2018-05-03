@@ -4,6 +4,7 @@ import axios from 'axios'
 import {BrowserRouter as Router} from 'react-router-dom'
 import {Grid, Row, Col, ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap'
 import './Restaurantlist.css'
+import store from '../store'
 
 
 class RestaurantList extends Component {
@@ -11,28 +12,32 @@ class RestaurantList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: store.getState().restaurant,
       category: ''
     }
+    store.subscribe ( () => {
+      this.setState({
+        data: store.getState().restaurant,
+      })
+    })
   }
 
   componentDidMount() {
     this.fetchRestaurantData('1');
   }
 
-  handleEvent(e) {
-    e.preventDefault ()
-  }
-
   fetchRestaurantData(eventKey) {
-    console.log(eventKey)
     this.setState({category: eventKey})
     console.log(typeof eventKey)
     axios.get(`https://developers.zomato.com/api/v2.1/search?category=${eventKey}&sort=cost&order=asc`,{headers: { 'user-key' : '4fea6930ef5dd45a54f63284d8d71508'}})
       .then(response => {
+          store.dispatch({
+            type: 'GET_ALL_RESTAURANT',
+            payload: response.data.restaurants
+          }) 
           console.log(response.data.restaurants)
-          let results = response.data.restaurants
-          this.setState({data: results})
+          // let results = response.data.restaurants
+          // this.setState({data: results})
       })
       .catch(err => console.log(err));
   }

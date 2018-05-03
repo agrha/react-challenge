@@ -1,12 +1,16 @@
-import {createStore, combineReducers} from 'redux'
-import restaurantReducer from './restaurant.reducer'
+import { createStore, combineReducers } from 'redux'
+import restaurantReducers from './restaurant/restaurant.reducer'
+import detailReducers from './detail/detail.reducer'
 
-const reducer = combineReducers({
-  restaurant: restaurantReducer
+
+const restaurant= combineReducers({
+  restaurant: restaurantReducers,
+  detail: detailReducers 
 })
 
-const store = createStore (
-  reducer,
+
+const store = createStore(
+  restaurant,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 

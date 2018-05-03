@@ -4,6 +4,10 @@ import {BrowserRouter as Router, Link} from 'react-router-dom'
 import './Restaurant.css';
 
 class Restaurant extends Component {
+
+  refresh () {
+    window.location.href(`/${this.props.data.restaurant.R.res_id}/${this.props.category}`)
+  }
     
   render() {
     return (
@@ -14,7 +18,7 @@ class Restaurant extends Component {
             <p className="restaurant-name">Price for Two: {this.props.data.restaurant.average_cost_for_two} {this.props.data.restaurant.currency}</p>
             <p>{this.props.data.restaurant.location.address}</p>
             <p>Restauranteer Votes: {this.props.data.restaurant.user_rating.votes}</p>
-            <Link to={`/detail/${this.props.data.restaurant.R.res_id}/${this.props.category}`}><Button bsStyle="primary">See Detail</Button></Link>
+            <Link to={`/${this.props.data.restaurant.R.res_id}/${this.props.category}`} onClick={this.refresh}><Button bsStyle="primary">See Detail</Button></Link>
         </Jumbotron>
       </Router>
     );

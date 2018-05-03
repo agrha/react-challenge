@@ -1,6 +1,6 @@
 const reducers = (state=[], action) => {
   switch (action.type) {
-    case 'GET_ALL_RESTAURANT':
+    case 'GET_DETAIL_RESTAURANT':
       return action.payload
     default:
       return state
