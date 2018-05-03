@@ -18,10 +18,6 @@ class Detail extends Component {
     this.fetchRestaurantData(category);
   }
 
-  refresh = () => {
-    window.location.reload()
-  }
-
   fetchRestaurantData(category) {
     axios.get(`https://developers.zomato.com/api/v2.1/search?category=${category}&sort=cost&order=asc`,{headers: { 'user-key' : '4fea6930ef5dd45a54f63284d8d71508'}})
       .then(response => {
