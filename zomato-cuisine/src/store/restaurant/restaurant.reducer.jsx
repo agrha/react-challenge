@@ -1,38 +1,36 @@
 import {
-  LOAD_RESTAURANT_SUCCESS,
-  LOAD_RESTAURANT_ERROR,
-  LOAD_RESTAURANT_LOADING,
+  GET_RESTAURANTS_SUCCESS,
+  GET_RESTAURANTS_ERROR,
+  GET_RESTAURANTS_LOADING
 } from './restaurant.actionTypes';
 
 const initialState = {
+  error: null,
   loading: false,
-  error: false,
-  data: [],
+  data: []
 }
-
-const reducers = (state={ ...initialState }, action) => {
+const reducerRestaurant = (state = {...initialState}, action) => {
   switch (action.type) {
-    case LOAD_RESTAURANT_SUCCESS:
+    case GET_RESTAURANTS_SUCCESS:
       return {
         ...state,
         data: action.payload,
         loading: false
       }
-    case LOAD_RESTAURANT_LOADING:
+    case GET_RESTAURANTS_LOADING:
       return {
         ...state,
-        loading: true,
-        data: []
+        loading: true
       }
-    case LOAD_RESTAURANT_ERROR:
+    case GET_RESTAURANTS_ERROR:
       return {
         ...state,
-        error: true,
-        loading: false,
+        error:true,
+        loading:false
       }
     default:
-      return state;
+      return state
   }
 }
 
-export default reducers;
+export default reducerRestaurant;

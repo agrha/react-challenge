@@ -23,8 +23,7 @@ class Detail extends Component {
       .then(response => {
           // console.log(response.data.restaurants)
           let results = response.data.restaurants
-          let search = {}
-          results.map(data => {
+          results.map((data )=> {
             if(data.restaurant.id === this.props.match.params.id){
               this.setState({data: data.restaurant})
               this.setState({location: data.restaurant.location})

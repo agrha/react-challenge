@@ -1,44 +1,34 @@
 import {
-  LOAD_RESTAURANT_SUCCESS,
-  LOAD_RESTAURANT_ERROR,
-  LOAD_RESTAURANT_LOADING,
-  LOAD_NEWRESTAURANT_SUCCESS
-} from './RESTAURANT.actionTypes';
+    GET_RESTAURANTS_SUCCESS,
+    GET_RESTAURANTS_ERROR,
+    GET_RESTAURANTS_LOADING
+  } from './restaurant.actionTypes';
+
 import axios from 'axios'
 
-export const loadRestaurant = (payload) => {
+export const getRestaurant = (payload) => {
   return dispatch => {
-    dispatch(loadRESTAURANTLoading())
-    axios({
-      method: 'get',byoo
-      url: 'https://api.opendota.com/api/RESTAURANT'
-    }).then(({ data }) => {
-      const newData = data.slice(0, 30)
-      dispatch(loadRESTAURANTSuccess(newData))
-    }).catch(err => dispatch(loadRESTAURANTError()))
-  }
+    dispatch(getRestaurantPending())
+    axios.get(`https://developers.zomato.com/api/v2.1/search?category=${payload}&sort=cost&order=asc`,{headers: { 'user-key' : 'd40fded21a46889e1b6a52a9aaa08b63'}})
+      .then(response => {
+          // console.log(this.props.restaurants)
+          dispatch(getRestaurantSuccess(response.data.restaurants))
+          // let results = response.data.restaurants
+          // this.setState({data: results})
+      })
+      .catch(err => console.log('makan nih',err));
+    }
 }
 
-export const loadNewTeam = (payload) => {
-  return dispatch => {
-    dispatch(loadNewRESTAURANTuccess(payload))
-  }
-}
-
-const loadNewRESTAURANTuccess = (payload) => ({
-  type: LOAD_NEWRESTAURANT_SUCCESS,
-  payload: payload
+const getRestaurantSuccess = (payload) => ({
+    type: GET_RESTAURANTS_SUCCESS,
+    payload: payload
+  })
+  
+const getRestaurantPending = (payload) => ({
+  type: GET_RESTAURANTS_LOADING
 })
-
-const loadRESTAURANTSuccess = (payload) => ({
-  type: LOAD_RESTAURANT_SUCCESS,
-  payload: payload
-})
-
-const loadRESTAURANTLoading = (payload) => ({
-  type: LOAD_RESTAURANT_LOADING
-})
-
-const loadRESTAURANTError = (payload) => ({
-  type: LOAD_RESTAURANT_ERROR
+  
+const getRestaurantError = (payload) => ({
+  type: GET_RESTAURANTS_ERROR
 })
